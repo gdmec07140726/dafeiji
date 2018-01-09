@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<link rel="stylesheet" href="minify-css/dafeiji.css" />
+		
+		<script src="js/common.js"></script>
+		<script src="uglify-js/gameEngine.js"></script>
+		<script src="uglify-js/myPlane.js"></script>
+		<script src="uglify-js/bullet.js"></script>
+		<script src="uglify-js/Enemy.js"></script>
+		
+		<script>
+			onload = ()=>{
+				
+				//面向对象				
+				
+				//
+				//cocos2d，  U3d, 虚幻4， 游戏引擎
+				//导演
+				// 场景 
+				// 精灵
+				
+				
+				
+				let list = document.getElementById("list");
+				let ali = list.getElementsByTagName("li");
+				let score = document.getElementById("score");
+				let mask = document.getElementById("mask");
+				//let p = mask.getElementsByTagName("p")[0];
+				let p = document.getElementById("p");
+				let inp = mask.getElementsByTagName("input")[0];
+				let btn = mask.getElementsByTagName("button");
+				
+				for (let i=0; i<ali.length; i++){
+					const that = ali[i];
+					ali[i].onclick = ()=>{
+						
+						//清除ul
+						list.parentNode.removeChild(list);
+						
+						(new Plane()).fireInterval = that.value - 0;
+						
+						//开始游戏
+						gameEngine.init().start();
+						
+					}
+				}
+				
+				btn[0].onclick = ()=>{
+					if(inp.value){
+						let name = inp.value;
+						let xhr = createXHR();
+						xhr.open('POST', 'http://60.205.181.47/myPHPCode4/uploadScore.php', true);
+						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						xhr.send("name="+name + "&score="+gameEngine.score);
+						xhr.onreadystatechange = ()=>{
+							if(xhr.readyState==4 && xhr.status==200){
+								//console.log(xhr.responseText);
+								let obj = JSON.parse(xhr.responseText);
+								if(obj.status==1){
+									alert("提交成功");
+									location.href = "rand.html";
+								}else{
+									alert("分数太少了，不能提交，再接再厉！");
+								}
+							}
+						}
+					}else{
+						alert("名字不能为空");
+					}
+				}
+				
+				
+				btn[1].onclick = ()=>{
+					location.reload(true);
+				}
+				
+				
+			}
+			
+			function createXHR(){
+				if(window.XMLHttpRequest){
+					return new XMLHttpRequest();
+				}
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		</script>
+	</head>
+	<body>
+		<div id="main" >
+			<div id="score">分数：0</div>
+			<ul id="list">
+				<li value="1000">超级困难</li>
+				<li value="600">非常困难</li>
+				<li value="300">比较困难</li>
+				<li value="100">春哥附体</li>
+			</ul>
+			<div id="mask">
+				<div id="sub">
+					<h1>GameOver</h1>
+					<p id="p">本次总分：0</p>
+					<input type="text" placeholder="请输入名字" /><br />
+					<button>提交分数</button>
+					<button>重新开始</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

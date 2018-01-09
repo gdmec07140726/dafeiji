@@ -1,0 +1,27 @@
+/* CSS Document */
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, br, input, textarea, legend, ul, ol, li, dl, dt, dd, table, td, th, form, fieldset, button,nav,section,header,footer,article,aside{ margin:0; padding:0;}
+body{ color:#000; font-family:"微软雅黑"; font-size: 14px;}
+ul li,ol li{ list-style:none;}
+a{ text-decoration:none;}
+img{ /*display:block;*/ border:none;}
+input{ outline:none;}
+i,em{
+	font-style: normal;
+}
+b,strong{
+	font-weight: normal;
+}
+
+.clearfix:after{
+	content:"."; 
+	clear:both; 
+	display:block; 
+	height:0; 
+	overflow:hidden; 
+	visibility:hidden; 
+	font-size:1px;
+}
+.main{
+	margin: 0 auto; width: 1002px;
+}
